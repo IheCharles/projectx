@@ -19,7 +19,7 @@ function Hero() {
         </a>
       </div>
     </section>
-  )
+  );
 }
 
-export default Hero
+export default Hero;

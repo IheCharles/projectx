@@ -1,35 +1,35 @@
 interface Feature {
-  icon: string
-  title: string
-  description: string
+  icon: string;
+  title: string;
+  description: string;
 }
 
 const features: Feature[] = [
   {
-    icon: '💰',
-    title: 'Factory-Direct Pricing',
+    icon: "💰",
+    title: "Factory-Direct Pricing",
     description:
-      'Cut out the middlemen. Source retatrutide straight from our manufacturing partners in China at the best rates available.',
+      "Cut out the middlemen. Source retatrutide straight from our manufacturing partners in China at the best rates available.",
   },
   {
-    icon: '🌍',
-    title: 'Global Shipping',
+    icon: "🌍",
+    title: "Global Shipping",
     description:
-      'We ship to destinations worldwide with reliable logistics partners, ensuring safe and timely delivery to your door.',
+      "We ship to destinations worldwide with reliable logistics partners, ensuring safe and timely delivery to your door.",
   },
   {
-    icon: '📦',
-    title: 'Bulk Orders Welcome',
+    icon: "📦",
+    title: "Bulk Orders Welcome",
     description:
-      'Whether you need grams or kilograms, we accommodate orders of all sizes with flexible MOQ and scaling discounts.',
+      "Whether you need grams or kilograms, we accommodate orders of all sizes with flexible MOQ and scaling discounts.",
   },
   {
-    icon: '✅',
-    title: 'Quality Assured',
+    icon: "✅",
+    title: "Quality Assured",
     description:
-      'Every batch undergoes rigorous third-party testing. Certificates of analysis (COA) provided with every order.',
+      "Every batch undergoes rigorous third-party testing. Certificates of analysis (COA) provided with every order.",
   },
-]
+];
 
 function About() {
   return (
@@ -51,7 +51,7 @@ function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default About
+export default About;

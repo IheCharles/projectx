@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = () => {
-    setMenuOpen(false)
-  }
+    setMenuOpen(false);
+  };
 
   return (
     <header className="site-header" id="top">
@@ -14,7 +14,7 @@ function Header() {
           Reta<span>WholeSale</span>
         </a>
         <nav>
-          <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
+          <ul className={`nav-links${menuOpen ? " open" : ""}`}>
             <li>
               <a href="#top" onClick={closeMenu}>
                 Home
@@ -26,13 +26,18 @@ function Header() {
               </a>
             </li>
             <li>
-              <a href="#contact" className="btn btn-sm" onClick={closeMenu} style={{ color: '#fff' }}>
+              <a
+                href="#contact"
+                className="btn btn-sm"
+                onClick={closeMenu}
+                style={{ color: "#fff" }}
+              >
                 Contact Us
               </a>
             </li>
           </ul>
           <button
-            className={`mobile-menu-toggle${menuOpen ? ' active' : ''}`}
+            className={`mobile-menu-toggle${menuOpen ? " active" : ""}`}
             aria-label="Toggle menu"
             onClick={() => setMenuOpen((prev) => !prev)}
           >
@@ -43,7 +48,7 @@ function Header() {
         </nav>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

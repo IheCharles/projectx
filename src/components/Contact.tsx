@@ -57,7 +57,7 @@ function Contact() {
         </form>
       </div>
     </section>
-  )
+  );
 }
 
-export default Contact
+export default Contact;

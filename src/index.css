@@ -15,7 +15,12 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   color: #1e293b;
   background: #f8fafc;
   line-height: 1.6;
@@ -74,7 +79,10 @@ ul {
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+  transition:
+    background 0.25s,
+    transform 0.15s,
+    box-shadow 0.25s;
   border: none;
   background: #2563eb;
   color: #fff;
@@ -165,7 +173,9 @@ ul {
   height: 2.5px;
   background: #0f172a;
   border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -240,7 +250,9 @@ ul {
   border-radius: 14px;
   padding: 2rem 1.5rem;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .feature-card:hover {
@@ -305,7 +317,9 @@ ul {
   font-size: 0.95rem;
   color: #1e293b;
   background: #f8fafc;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   outline: none;
 }
 
@@ -390,7 +404,9 @@ ul {
     transform: translateY(-120%);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
   }
 
   .nav-links.open {
