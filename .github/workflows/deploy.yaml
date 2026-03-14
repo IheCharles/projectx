@@ -26,27 +26,17 @@ jobs:
         with:
           node-version: "22.14.0"
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Cache pnpm store
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/share/pnpm/store/v10
-          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-store-${{ runner.os }}-
-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
-      - run: pnpm build
+      - run: npm run build
 
       - name: Copy index.html to 404.html for SPA routing
-        run: cp apps/odc/dist/index.html apps/odc/dist/404.html
+        run: cp dist/index.html dist/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/odc/dist/
+          path: dist/
           retention-days: 1
 
       - id: deployment
