@@ -54,10 +54,7 @@ function Contact() {
           <button type="submit" className="btn btn-lg btn-submit">
             Send Message
           </button>
-          <p
-            className="form-note"
-            style={{ fontWeight: "bold", color: "#c00", fontSize: "1.1em" }}
-          >
+          <p className="form-note">
             Please check your spam/junk folder if you don't receive a reply.
           </p>
         </form>

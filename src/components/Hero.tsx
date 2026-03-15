@@ -11,6 +11,9 @@ function Hero() {
           Reliable supply, factory-direct pricing, and worldwide shipping — your
           single source for bulk retatrutide.
         </p>
+        <p className="hero-price">
+          Starting at <strong>$100</strong> for 100 mg
+        </p>
         <a href="#contact" className="btn btn-lg">
           Get a Quote
         </a>
