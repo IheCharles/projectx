@@ -11,7 +11,7 @@ function Header() {
     <header className="site-header" id="top">
       <div className="container nav-wrap">
         <a href="#top" className="logo">
-          Reta<span>WholeSale QQQQQQQQQQQQQQQQQQQQQ</span>
+          Reta<span>WholeSale HOOOOOOOWWWWW</span>
         </a>
         <nav>
           <ul className={`nav-links${menuOpen ? " open" : ""}`}>
