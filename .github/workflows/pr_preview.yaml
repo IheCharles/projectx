@@ -30,30 +30,16 @@ jobs:
 
       - run: cp dist/index.html dist/404.html
 
-      - name: Deploy preview
+      - name: Prepare deploy directory
         run: |
           PR=${{ github.event.pull_request.number }}
+          mkdir -p deploy/pr-preview/$PR
+          cp -r dist/* deploy/pr-preview/$PR/
+          touch deploy/.nojekyll
 
-          # Save build output before switching branches
-          cp -r dist /tmp/pr-dist
-
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-          git fetch origin gh-pages || true
-          if git checkout gh-pages; then
-            echo "Checked out existing gh-pages"
-          else
-            git checkout --orphan gh-pages
-            git rm -rf .
-          fi
-
-          touch .nojekyll
-          mkdir -p pr-preview/$PR
-          rm -rf pr-preview/$PR/*
-          cp -r /tmp/pr-dist/* pr-preview/$PR/
-
-          git add .nojekyll pr-preview/$PR
-          git commit -m "Deploy preview for PR $PR" || true
-          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
-          git push origin gh-pages
+      - name: Deploy preview
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy
+          keep_files: true
