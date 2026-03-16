@@ -26,7 +26,7 @@ jobs:
 
       - run: npm run build
         env:
-          BASE_PATH: /repo/pr-preview/${{ github.event.pull_request.number }}/
+          BASE_PATH: /${{ github.event.repository.name }}/pr-preview/${{ github.event.pull_request.number }}/
 
       - run: cp dist/index.html dist/404.html
 
