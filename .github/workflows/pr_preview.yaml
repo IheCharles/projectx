@@ -41,7 +41,12 @@ jobs:
           git config --global user.email "github-actions@github.com"
 
           git fetch origin gh-pages || true
-          git checkout gh-pages || git checkout --orphan gh-pages
+          if git checkout gh-pages; then
+            git reset --hard origin/gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
 
           mkdir -p pr-preview/$PR
           rm -rf pr-preview/$PR/*
