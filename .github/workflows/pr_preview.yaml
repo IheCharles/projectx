@@ -49,4 +49,5 @@ jobs:
 
           git add pr-preview/$PR
           git commit -m "Deploy preview for PR $PR" || true
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
