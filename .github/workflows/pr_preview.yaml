@@ -11,6 +11,7 @@ concurrency:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   deploy:
@@ -53,6 +54,25 @@ jobs:
           git add -A
           git commit -m "Deploy preview for PR $PR" || true
           git push "$REPO_URL" gh-pages
+
+      - name: Comment preview URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR=${{ github.event.pull_request.number }}
+          OWNER=${{ github.repository_owner }}
+          REPO=${{ github.event.repository.name }}
+          PREVIEW_URL="https://${OWNER}.github.io/${REPO}/pr-preview/${PR}/"
+          COMMENT_BODY="🚀 **PR Preview:** ${PREVIEW_URL}"
+          COMMENT_TAG="<!-- pr-preview-comment -->"
+
+          EXISTING=$(gh api "repos/${{ github.repository }}/issues/${PR}/comments" --jq ".[] | select(.body | contains(\"${COMMENT_TAG}\")) | .id")
+
+          if [ -n "$EXISTING" ]; then
+            gh api "repos/${{ github.repository }}/issues/comments/${EXISTING}" -X PATCH -f body="${COMMENT_TAG}${COMMENT_BODY}"
+          else
+            gh api "repos/${{ github.repository }}/issues/${PR}/comments" -f body="${COMMENT_TAG}${COMMENT_BODY}"
+          fi
 
   cleanup:
     if: github.event.action == 'closed'
