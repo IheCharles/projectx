@@ -72,7 +72,7 @@ jobs:
             gh api "repos/${{ github.repository }}/issues/comments/${EXISTING}" -X DELETE
           fi
 
-          gh api "repos/${{ github.repository }}/issues/${PR}/comments" -f body="${COMMENT_TAG}${COMMENT_BODY}"
+          gh pr comment "$PR" --repo "${{ github.repository }}" --body "${COMMENT_TAG} 🚀 **PR Preview:** [Click here to preview](${PREVIEW_URL})"
 
   cleanup:
     if: github.event.action == 'closed'
