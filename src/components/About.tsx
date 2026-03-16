@@ -13,7 +13,7 @@ const features: Feature[] = [
   },
   {
     icon: "🌍",
-    title: "Global Shipping",
+    title: "Global LERRRRRYYYYYYYY",
     description:
       "We ship to destinations worldwide with reliable logistics partners, ensuring safe and timely delivery to your door.",
   },
