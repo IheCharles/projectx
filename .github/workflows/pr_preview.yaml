@@ -2,6 +2,7 @@ name: Deploy PR Preview
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches: [main]
 
 concurrency:
@@ -13,6 +14,7 @@ permissions:
 
 jobs:
   deploy:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
 
     steps:
@@ -50,4 +52,27 @@ jobs:
 
           git add -A
           git commit -m "Deploy preview for PR $PR" || true
+          git push "$REPO_URL" gh-pages
+
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remove preview
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          PR=${{ github.event.pull_request.number }}
+          REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+
+          git clone --branch gh-pages --single-branch "$REPO_URL" /tmp/gh-pages || exit 0
+
+          cd /tmp/gh-pages
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          rm -rf pr-preview/$PR
+          git add -A
+          git commit -m "Remove preview for PR $PR" || true
           git push "$REPO_URL" gh-pages
