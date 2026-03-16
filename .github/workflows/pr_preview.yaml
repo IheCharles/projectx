@@ -31,28 +31,27 @@ jobs:
           BASE_PATH: /${{ github.event.repository.name }}/pr-preview/${{ github.event.pull_request.number }}/
 
       - name: Deploy preview
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           PR=${{ github.event.pull_request.number }}
 
-          # Save build output before switching branches
-          cp -r dist /tmp/pr-dist
-
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-          git fetch origin gh-pages || true
-          if git checkout gh-pages; then
-            git reset --hard origin/gh-pages
-          else
+          cd /tmp
+          git clone --branch gh-pages --single-branch https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages-repo || {
+            git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages-repo
+            cd gh-pages-repo
             git checkout --orphan gh-pages
             git rm -rf .
-          fi
+          }
+          cd /tmp/gh-pages-repo
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
           mkdir -p pr-preview/$PR
           rm -rf pr-preview/$PR/*
-          cp -r /tmp/pr-dist/* pr-preview/$PR/
+          cp -r $GITHUB_WORKSPACE/dist/* pr-preview/$PR/
 
-          git add pr-preview/$PR
+          git add -A
           git commit -m "Deploy preview for PR $PR" || true
-          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
-          git push --force origin gh-pages
+          git push origin gh-pages
