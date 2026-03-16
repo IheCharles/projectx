@@ -28,26 +28,26 @@ jobs:
       - run: npm run build
 
       - name: Deploy to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          cp -r dist /tmp/dist-build
-
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-          git fetch origin gh-pages || true
-          if git checkout gh-pages; then
-            git reset --hard origin/gh-pages
-          else
+          cd /tmp
+          git clone --branch gh-pages --single-branch https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages-repo || {
+            git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages-repo
+            cd gh-pages-repo
             git checkout --orphan gh-pages
             git rm -rf .
-          fi
+          }
+          cd /tmp/gh-pages-repo
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
           # Remove old root files but keep pr-preview/
           find . -maxdepth 1 ! -name '.' ! -name '.git' ! -name 'pr-preview' -exec rm -rf {} +
 
-          cp -r /tmp/dist-build/* .
+          cp -r $GITHUB_WORKSPACE/dist/* .
 
           git add -A
           git commit -m "deploy: ${{ github.sha }}" || true
-          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
-          git push --force origin gh-pages
+          git push origin gh-pages
