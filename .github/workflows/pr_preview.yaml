@@ -35,16 +35,14 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           PR=${{ github.event.pull_request.number }}
+          REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
 
-          cd /tmp
-          git clone --branch gh-pages --single-branch https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages-repo || {
-            git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git gh-pages-repo
-            cd gh-pages-repo
-            git checkout --orphan gh-pages
-            git rm -rf .
+          git clone --branch gh-pages --single-branch "$REPO_URL" /tmp/gh-pages || {
+            git init /tmp/gh-pages
+            git -C /tmp/gh-pages checkout --orphan gh-pages
           }
-          cd /tmp/gh-pages-repo
 
+          cd /tmp/gh-pages
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
@@ -54,4 +52,4 @@ jobs:
 
           git add -A
           git commit -m "Deploy preview for PR $PR" || true
-          git push origin gh-pages
+          git push "$REPO_URL" gh-pages
