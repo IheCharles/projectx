@@ -28,6 +28,8 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}/pr-preview/${{ github.event.pull_request.number }}/
 
+      - run: cp dist/index.html dist/404.html
+
       - name: Deploy preview
         run: |
           PR=${{ github.event.pull_request.number }}
@@ -39,13 +41,19 @@ jobs:
           git config --global user.email "github-actions@github.com"
 
           git fetch origin gh-pages || true
-          git checkout gh-pages || git checkout --orphan gh-pages
+          if git checkout gh-pages; then
+            echo "Checked out existing gh-pages"
+          else
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
 
+          touch .nojekyll
           mkdir -p pr-preview/$PR
           rm -rf pr-preview/$PR/*
           cp -r /tmp/pr-dist/* pr-preview/$PR/
 
-          git add pr-preview/$PR
+          git add .nojekyll pr-preview/$PR
           git commit -m "Deploy preview for PR $PR" || true
           git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
