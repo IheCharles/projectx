@@ -50,4 +50,4 @@ jobs:
           git add -A
           git commit -m "deploy: ${{ github.sha }}" || true
           git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
-          git push origin gh-pages
+          git push --force origin gh-pages
