@@ -34,6 +34,9 @@ jobs:
         run: |
           PR=${{ github.event.pull_request.number }}
 
+          # Save build output before switching branches
+          cp -r dist /tmp/pr-dist
+
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
@@ -42,7 +45,7 @@ jobs:
 
           mkdir -p pr-preview/$PR
           rm -rf pr-preview/$PR/*
-          cp -r dist/* pr-preview/$PR/
+          cp -r /tmp/pr-dist/* pr-preview/$PR/
 
           git add pr-preview/$PR
           git commit -m "Deploy preview for PR $PR" || true
