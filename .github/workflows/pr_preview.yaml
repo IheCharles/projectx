@@ -28,8 +28,6 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}/pr-preview/${{ github.event.pull_request.number }}/
 
-      - run: cp dist/index.html dist/404.html
-
       - name: Deploy preview
         run: |
           PR=${{ github.event.pull_request.number }}
